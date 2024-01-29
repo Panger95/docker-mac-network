@@ -18,4 +18,6 @@ if [ ! -f "${OUT_BASE}/$dest" ]; then
     ovpn_getclient host | sed "s|localhost 1194|localhost ${forward_port}|;s|redirect-gateway.*|route ${network} ${netmask}|;" > "${OUT_BASE}/$dest"
 fi
 
+/sbin/iptables -I FORWARD 1 -i tun+ -j ACCEPT
+
 exec ovpn_run
